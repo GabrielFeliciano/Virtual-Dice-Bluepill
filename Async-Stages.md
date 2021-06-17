@@ -48,6 +48,13 @@ até RAND_MAX sendo que o RAND_MAX pode variar.
 
 4. Funções: estude o que é um display de 7 segmentos e a diferença entre os modelos anodo comum e catodo comum. Após isso, estude a função de mostrar um número de display 7 segmentos fornecida e ajuste a pinagem para o seu circuito.
 
+```markdown
+Basicamente a diferença é o nivel lógico necessário para acionar um led interno do displayer.
+
+* No cátodo comum temos todos os cátodos dos led ligados entre si junto com a entrada onde normalmente se coloca o *GND*, assim, usa-se uma tensão maior para saturar o led, normalmente *VCC*.
+* No Anodo comum é oposto. Os anotos estão ligados entre si e normalmente vai o *VCC*, assim, ligamos os leds com uma tensão menor, normalmente o *GND*
+```
+
 5. Projeto circuito saída: calcule o resistor que deve ser colocado em série em cada segmento do display de 7 segmentos. Pesquise o manual do display HDSP-5501 e identifique os parâmetros VF e IF para o cálculo do resistor.
 
 ```markdown
