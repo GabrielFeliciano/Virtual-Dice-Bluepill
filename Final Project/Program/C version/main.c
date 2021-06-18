@@ -1,7 +1,12 @@
 #include <stdbool.h>
 #include "gpio/gpio.h"
 
-// Types
+// || -----------------------------------------------------------------------------------------
+// || ----------------------------------------- Types -----------------------------------------
+// ||
+// || Todos os tipos necessarios para o programa como *structs* ou *enums*.
+// ||
+// \/ -----------------------------------------------------------------------------------------
 
 enum ResultStatus {
     Err,
@@ -24,34 +29,54 @@ struct UpcommingSignal {
     int last;
 };
 
-// Macros
+// || --------------------------------------------------------------------------------------------------
+// || ----------------------------------------- Function Types -----------------------------------------
+// ||
+// || Declarações dos tipos dos parametros e da saida. Necessario quando se implementa as funcoes depois
+// || do *main*.
+// ||
+// \/ --------------------------------------------------------------------------------------------------
 
-#define button_pin 15
-
-// Global variables
-
-int display_pin[] = {3,4,5,6,7,8,9};
-
-// Function signatures
+struct ResultArrayOfInt Proteus7Seg_Strategy(int num);
 
 typedef struct ResultArrayOfInt (*DisplayInputMapper)(int);
 enum ResultStatus display_simbol(DisplayInputMapper strategy, int display_pins[], int num);
 
-// Macros
+// || ----------------------------------------------------------------------------------------------------
+// || ----------------------------------------- Global variables -----------------------------------------
+// ||
+// || Todas as variaveis globais.
+// ||
+// \/ ----------------------------------------------------------------------------------------------------
 
+int display_pin[] = {3,4,5,6,7,8,9};
+
+// || ------------------------------------------------------------------------------------------
+// || ----------------------------------------- Macros -----------------------------------------
+// ||
+// || Macros são uma maneira de dizer para o compilador onde certa parte precisa ser trocada por
+// || um codigo.
+// ||
+// \/ ------------------------------------------------------------------------------------------
+
+
+#define button_pin 15
 #define write_number_on_proteus_7_seg_display(x) (display_simbol(Proteus7Seg_Strategy, display_pin, x))
 
-struct ResultArrayOfInt Proteus7Seg_Strategy(int num);
+// || ------------------------------------------------------------------------------------------- ||
+// || ----------------------------------------- Program ----------------------------------------- ||
+// || ----------------------------------------- Program ----------------------------------------- ||
+// || ----------------------------------------- Program ----------------------------------------- ||
+// \/ ------------------------------------------------------------------------------------------- \/
 
-// Program
-
+// Configuração dos pinos GPIO
 void configure_pins() {
     // GPIO init
     gpio_init();
 
     // Button
-    gpio_pin_mode(GPIOB, button_pin, gpio_mode_input_pupd);
-    gpio_pin_write(GPIOB, button_pin, 0);
+    gpio_pin_mode(GPIOB, button_pin, gpio_mode_input_pupd); // Input pupd
+    gpio_pin_write(GPIOB, button_pin, 0); // Configura Pull down
 
     // Display pins
     for (int i = 0; i < sizeof(display_pin)/sizeof(int); i++) {
@@ -59,6 +84,7 @@ void configure_pins() {
     }
 }
 
+// Main
 void main() {
     // Configure all pins
     configure_pins();
@@ -78,20 +104,19 @@ void main() {
         buttonState.current = gpio_pin_read(GPIOB, button_pin);
 
         if (buttonState.last != buttonState.current && buttonState.current == 1) {
-            // number += 1;
-            // if (number > 6) number = 1;
             number = rand() % 6 + 1;
         }
 
-        enum ResultStatus result = write_number_on_proteus_7_seg_display(number);
-        int b = 1;
+        enum ResultStatus result = display_simbol(Proteus7Seg_Strategy, display_pin, number);
     }
 }
 
-
-// -----------------
-// --- Functions ---
-// -----------------
+// || ---------------------------------------------------------------------------------------------
+// || ----------------------------------------- Functions -----------------------------------------
+// ||
+// || Todas as funções necessarias para o codigo.
+// ||
+// \/ ---------------------------------------------------------------------------------------------
 
 // Write output to pins
 void write_pins(int pins[], int output[], int size) {
