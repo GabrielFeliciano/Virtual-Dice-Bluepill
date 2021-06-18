@@ -12,7 +12,11 @@ void configure_pins() {
     // GPIO init
     gpio_init();
 
+<<<<<<< HEAD
     // Button
+=======
+    // Sensor
+>>>>>>> c3c4dc369a0a9cc054d65b946c0f65ceb5a1c58d
     gpio_pin_mode(GPIOB, button_pin, gpio_mode_input_floating);
 
     // Led
@@ -24,10 +28,10 @@ void main() {
     // Configure all pins
     configure_pins();
 
-    bool buttonStatus;
+    bool sensorStatus;
     while (true) {
-        buttonStatus = gpio_pin_read(GPIOB, button_pin);
-        gpio_pin_write(GPIOB, led_pin, !buttonStatus);
-        gpio_pin_write(GPIOC, 13, buttonStatus);
+        sensorStatus = gpio_pin_read(GPIOB, button_pin);
+        gpio_pin_write(GPIOB, led_pin, !sensorStatus);
+        gpio_pin_write(GPIOC, 13, sensorStatus);
     }
 }
