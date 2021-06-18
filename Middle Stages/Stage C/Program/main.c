@@ -13,8 +13,7 @@ void configure_pins() {
     gpio_init();
 
     // Button
-    gpio_pin_mode(GPIOB, button_pin, gpio_mode_input_pupd);
-    gpio_pin_write(GPIOB, button_pin, gpio_pupd_pd);
+    gpio_pin_mode(GPIOB, button_pin, gpio_mode_input_floating);
 
     // Led
     gpio_pin_mode(GPIOB, led_pin, gpio_mode_output_PP_10MHz);
